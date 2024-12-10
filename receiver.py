@@ -3,13 +3,12 @@ import os
 def start_receiver(host, port):
     # Start the receiver pipeline
     print("Starting receiver...")
-    video_port = port
-    audio_port = str(int(port) + 1)
-
+    
     receiver_pipeline = (
-        "gst-launch-1.0 -v "
-        f"tcpclientsrc host={host} port={video_port} ! application/x-rtp, payload=96 ! rtph264depay ! avdec_h264 ! videoconvert ! autovideosink "
-        f"tcpclientsrc host={host} port={audio_port} ! application/x-rtp, payload=97 ! rtpopusdepay ! opusdec ! audioconvert ! autoaudiosink"
+        f"gst-launch-1.0 -v "
+        f"tcpclientsrc host={host} port={port} ! matroskademux name=d "
+        "d.video_0 ! queue ! h264parse ! avdec_h264 ! videoconvert ! autovideosink "
+        "d.audio_0 ! queue ! opusdec ! audioconvert ! autoaudiosink"
     )
 
     os.system(receiver_pipeline)
