@@ -10,7 +10,7 @@ def start_sender(host, port):
         "x264enc speed-preset=ultrafast tune=zerolatency ! h264parse ! queue ! mux. "
         "alsasrc device=hw:1 ! audioconvert ! audioresample ! opusenc ! opusparse ! queue ! mux. "
         "matroskamux name=mux streamable=true ! "
-        f"tcpserversink host=0.0.0.0 port={port}"
+        f"tcpserversink host={host} port={port}"
     )
 
     os.system(sender_pipeline)
