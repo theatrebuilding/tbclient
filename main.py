@@ -23,9 +23,7 @@ def check_webcam():
     return False
 
 def load_env(env_path):
-    """
-    Load environment variables from a JSON file.
-    """
+    # Load environment variables from a JSON file
     with open(env_path, "r") as f:
         return json.load(f)
 
