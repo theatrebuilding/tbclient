@@ -7,7 +7,7 @@ from sender import start_sender
 from receiver import start_receiver
 
 def check_webcam():
-    # Checks if a webcam is attached to the system.
+    # Check if a valid webcam is connected
     try:
         result = subprocess.run(
             ["v4l2-ctl", "--list-devices"],
@@ -15,9 +15,14 @@ def check_webcam():
             stderr=subprocess.PIPE,
             text=True
         )
-        # Check if the output contains a valid video device
-        if "/dev/video" in result.stdout:
-            return True
+
+        output = result.stdout.lower() + result.stderr.lower()
+
+        # Check if /dev/video0 is mentioned
+        if "/dev/video0" in output:
+            # If we see 'cannot open device /dev/video0', that means no valid webcam
+            if "cannot open device /dev/video0" not in output:
+                return True
     except Exception as e:
         print(f"Error checking webcam: {e}")
     return False

@@ -1,12 +1,7 @@
 import os
 
 def start_receiver(host, port):
-    """
-    Starts the receiver pipeline using GStreamer over TCP.
-    The receiver acts as a TCP client connecting to the sender's host:port.
-
-    We'll assume the sender is available at host:port for video and host:(port+1) for audio.
-    """
+    # Start the receiver pipeline
     print("Starting receiver...")
     video_port = port
     audio_port = str(int(port) + 1)
