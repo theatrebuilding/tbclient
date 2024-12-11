@@ -1,6 +1,6 @@
 import os
 
-def start_receiver(host, port):
+def start_receiver(host, receiver1, receiver2):
     # Start the receiver pipeline
     print("Starting receiver...")
     

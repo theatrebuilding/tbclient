@@ -110,10 +110,10 @@ def main():
     print("Checking for webcam...")
     if check_webcam():
         print("Webcam detected. Starting sender.")
-        start_sender(host, sender, receiver1, receiver2)
+        start_sender(host, sender)
     else:
         print("No webcam detected. Starting receiver.")
-        start_receiver(host, sender, receiver1, receiver2)
+        start_receiver(host, receiver1, receiver2)
 
 if __name__ == "__main__":
     main()
