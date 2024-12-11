@@ -2,19 +2,9 @@ import json
 import requests
 import base64
 import subprocess
-import requests
-
 
 from sender import start_sender
 from receiver import start_receiver
-
-def get_pinggy_url():
-    load_env("home/theatrebuidling/env.json")
-    country = requests.get("https://geolocation-db.com/json/39.110.142.79&position=true").json()
-    webcam = check_webcam()
-
-
-
 
 def check_webcam():
     # Check if a valid webcam is connected
@@ -78,6 +68,18 @@ def get_ngrok_url_from_github(env_path="/home/theatrebuilding/env.json"):
     except Exception as e:
         print(f"Error fetching ngrok_url from GitHub: {e}")
         return None
+    
+def get_ports_from_local_env(env_path="/home/theatrebuilding/env.json"):
+    # Get the ports from the local environment file
+    env = load_env(env_path)
+    HOST1 = env.get("PINGGY_ADDRESS_ONE")
+    HOST2 = env.get("PINGGY_ADDRESS_TWO")
+    HOST3 = env.get("PINGGY_ADDRESS_THREE")
+    PINGGY_SENDER = env.get("PINGGY_PORT_ONE")
+    PINGGY_RECEIVER1 = env.get("PINGGY_PORT_TWO")
+    PINGGY_RECEIVER2 = env.get("PINGGY_PORT_THREE")
+
+    return HOST1, HOST2, HOST3, PINGGY_SENDER, PINGGY_RECEIVER1, PINGGY_RECEIVER2
 
 def parse_ngrok_url(ngrok_url):
     # Parse the ngrok URL to extract the host and port
@@ -94,24 +96,26 @@ def parse_ngrok_url(ngrok_url):
     return host, port_str
 
 def main():
-    pinggy_url = get_pinnggy_url()
-    ngrok_url = get_ngrok_url_from_github()
-    if not ngrok_url:
-        print("Failed to retrieve ngrok URL, defaulting to localhost.")
-        host, port = "127.0.0.1", "5000"
-    else:
-        host, port = parse_ngrok_url(ngrok_url)
-        if not host or not port:
-            print("Failed to parse ngrok URL, defaulting to localhost.")
-            host, port = "127.0.0.1", "5000"
+#    ngrok_url = get_ngrok_url_from_github()
+#    if not ngrok_url:
+#        print("Failed to retrieve ngrok URL, defaulting to localhost.")
+#        host, port = "127.0.0.1", "5000"
+#    else:
+#        host, port = parse_ngrok_url(ngrok_url)
+#        if not host or not port:
+#            print("Failed to parse ngrok URL, defaulting to localhost.")
+#            host, port = "127.0.0.1", "5000"
+
+    host1, host2, host3, sender, receiver1, receiver2 = get_ports_from_local_env()
+
 
     print("Checking for webcam...")
     if check_webcam():
         print("Webcam detected. Starting sender.")
-        start_sender(host, port)
+        start_sender(host1, sender)
     else:
         print("No webcam detected. Starting receiver.")
-        start_receiver(host, port)
+        start_receiver(host2, host3, receiver1, receiver2)
 
 if __name__ == "__main__":
     main()
