@@ -2,9 +2,19 @@ import json
 import requests
 import base64
 import subprocess
+import requests
+
 
 from sender import start_sender
 from receiver import start_receiver
+
+def get_pinggy_url():
+    load_env("home/theatrebuidling/env.json")
+    country = requests.get("https://geolocation-db.com/json/39.110.142.79&position=true").json()
+    webcam = check_webcam()
+
+
+
 
 def check_webcam():
     # Check if a valid webcam is connected
@@ -84,6 +94,7 @@ def parse_ngrok_url(ngrok_url):
     return host, port_str
 
 def main():
+    pinggy_url = get_pinnggy_url()
     ngrok_url = get_ngrok_url_from_github()
     if not ngrok_url:
         print("Failed to retrieve ngrok URL, defaulting to localhost.")
