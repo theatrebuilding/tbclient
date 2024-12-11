@@ -3,17 +3,15 @@ import sys
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst, GLib
 
-host = "sender.a.pinggy.link"
-port = "20073"
 
-def start_sender(host, port):
+def start_sender():
     # Initialize GStreamer
     Gst.init(None)
 
     # Build the sender pipeline
     pipeline_description = (
         f"videotestsrc ! x264enc tune=zerolatency bitrate=500 speed-preset=superfast "
-        f"! rtph264pay config-interval=1 pt=96 ! tcpclientsink host={host} port={port}"
+        f"! rtph264pay config-interval=1 pt=96 ! tcpclientsink host=sender.a.pinggy.link port=20073"
     )
 
     pipeline = Gst.parse_launch(pipeline_description)
