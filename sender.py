@@ -3,7 +3,7 @@ import os
 def start_sender(host1, sender):
     # Start the sender pipeline
     print("Starting sender...")
-    print("Host: " + host)
+    print("Host: " + host1)
     print("Port: " + sender)
 
 
