@@ -8,7 +8,8 @@ def start_sender(host, port):
     print("Port: " + port)
 
     sender_pipeline = (
-        f"gst-launch-1.0 tcpclientsrc host={host} port={port} ! fdsink fd = 2"
+        f"gst-launch-1.0 -v videotestsrc pattern=snow ! video/v4l2h264enc,width=1280,height=720 "
+        f"! tcpserversink host=" + host + " port=" + port
     )
 
     os.system(sender_pipeline)
