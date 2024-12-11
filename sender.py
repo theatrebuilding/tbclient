@@ -4,7 +4,7 @@ def start_sender(host, sender):
     # Start the sender pipeline
     print("Starting sender...")
     print("Host: " + host)
-    print("Port: " + port)
+    print("Port: " + sender)
 
 
     sender_pipeline = (
