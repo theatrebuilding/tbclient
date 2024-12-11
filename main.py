@@ -72,12 +72,14 @@ def get_ngrok_url_from_github(env_path="/home/theatrebuilding/env.json"):
 def get_ports_from_local_env(env_path="/home/theatrebuilding/env.json"):
     # Get the ports from the local environment file
     env = load_env(env_path)
-    HOST = env.get("PINGGY_ADDRESS")
+    HOST1 = env.get("PINGGY_ADDRESS_ONE")
+    HOST2 = env.get("PINGGY_ADDRESS_TWO")
+    HOST3 = env.get("PINGGY_ADDRESS_THREE")
     PINGGY_SENDER = env.get("PINGGY_PORT_SENDING")
     PINGGY_RECEIVER1 = env.get("PINGGY_PORT_RECEIVING1")
     PINGGY_RECEIVER2 = env.get("PINGGY_PORT_RECEIVING2")
 
-    return HOST, PINGGY_SENDER, PINGGY_RECEIVER1, PINGGY_RECEIVER2
+    return HOST1, HOST2, HOST3, PINGGY_SENDER, PINGGY_RECEIVER1, PINGGY_RECEIVER2
 
 def parse_ngrok_url(ngrok_url):
     # Parse the ngrok URL to extract the host and port
@@ -104,16 +106,16 @@ def main():
 #            print("Failed to parse ngrok URL, defaulting to localhost.")
 #            host, port = "127.0.0.1", "5000"
 
-    host, sender, receiver1, receiver2 = get_ports_from_local_env()
+    host1, host2, host3, sender, receiver1, receiver2 = get_ports_from_local_env()
 
 
     print("Checking for webcam...")
     if check_webcam():
         print("Webcam detected. Starting sender.")
-        start_sender(host, sender)
+        start_sender(host1, sender)
     else:
         print("No webcam detected. Starting receiver.")
-        start_receiver(host, receiver1, receiver2)
+        start_receiver(host2, host3, receiver1, receiver2)
 
 if __name__ == "__main__":
     main()
