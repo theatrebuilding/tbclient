@@ -68,6 +68,16 @@ def get_ngrok_url_from_github(env_path="/home/theatrebuilding/env.json"):
     except Exception as e:
         print(f"Error fetching ngrok_url from GitHub: {e}")
         return None
+    
+def get_ports_from_local_env(env_path="/home/theatrebuilding/env.json"):
+    # Get the ports from the local environment file
+    env = load_env(env_path)
+    HOST = env.get("PINGGY_ADDRESS")
+    PINGGY_SENDER = env.get("PINGGY_PORT_SENDING")
+    PINGGY_RECEIVER1 = env.get("PINGGY_PORT_RECEIVING1")
+    PINGGY_RECEIVER2 = env.get("PINGGY_PORT_RECEIVING2")
+
+    return HOST, PINGGY_SENDER, PINGGY_RECEIVER1, PINGGY_RECEIVER2
 
 def parse_ngrok_url(ngrok_url):
     # Parse the ngrok URL to extract the host and port
@@ -84,23 +94,26 @@ def parse_ngrok_url(ngrok_url):
     return host, port_str
 
 def main():
-    ngrok_url = get_ngrok_url_from_github()
-    if not ngrok_url:
-        print("Failed to retrieve ngrok URL, defaulting to localhost.")
-        host, port = "127.0.0.1", "5000"
-    else:
-        host, port = parse_ngrok_url(ngrok_url)
-        if not host or not port:
-            print("Failed to parse ngrok URL, defaulting to localhost.")
-            host, port = "127.0.0.1", "5000"
+#    ngrok_url = get_ngrok_url_from_github()
+#    if not ngrok_url:
+#        print("Failed to retrieve ngrok URL, defaulting to localhost.")
+#        host, port = "127.0.0.1", "5000"
+#    else:
+#        host, port = parse_ngrok_url(ngrok_url)
+#        if not host or not port:
+#            print("Failed to parse ngrok URL, defaulting to localhost.")
+#            host, port = "127.0.0.1", "5000"
+
+    host, sender, receiver1, receiver2 = get_ports_from_local_env()
+
 
     print("Checking for webcam...")
     if check_webcam():
         print("Webcam detected. Starting sender.")
-        start_sender(host, port)
+        start_sender(host, sender, receiver1, receiver2)
     else:
         print("No webcam detected. Starting receiver.")
-        start_receiver(host, port)
+        start_receiver(host, sender, receiver1, receiver2)
 
 if __name__ == "__main__":
     main()
