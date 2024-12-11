@@ -75,9 +75,9 @@ def get_ports_from_local_env(env_path="/home/theatrebuilding/env.json"):
     HOST1 = env.get("PINGGY_ADDRESS_ONE")
     HOST2 = env.get("PINGGY_ADDRESS_TWO")
     HOST3 = env.get("PINGGY_ADDRESS_THREE")
-    PINGGY_SENDER = env.get("PINGGY_PORT_SENDING")
-    PINGGY_RECEIVER1 = env.get("PINGGY_PORT_RECEIVING1")
-    PINGGY_RECEIVER2 = env.get("PINGGY_PORT_RECEIVING2")
+    PINGGY_SENDER = env.get("PINGGY_PORT_ONE")
+    PINGGY_RECEIVER1 = env.get("PINGGY_PORT_TWO")
+    PINGGY_RECEIVER2 = env.get("PINGGY_PORT_THREE")
 
     return HOST1, HOST2, HOST3, PINGGY_SENDER, PINGGY_RECEIVER1, PINGGY_RECEIVER2
 
