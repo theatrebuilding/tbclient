@@ -17,7 +17,7 @@ def start_sender(host, port):
 #    )
 
     pipeline_description = (
-        f"raspivid -fps 26 -h 450 -w 600 -vf -n -t 0 -b 200000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96! gdppay ! tcpclientsink host={host} port={port}"
+        f"cat video.h264 | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96! gdppay ! tcpclientsink host={host} port={port}"
     )
 
 
