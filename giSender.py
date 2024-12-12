@@ -1,10 +1,10 @@
 import gi
-import sys
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst, GLib
 
-host = "sender.a.pinggy.link"
-port = "20073"
+# Hardcoded host and port
+HOST = "sender.a.pinggy.link"
+PORT = "20073"
 
 def start_sender(host, port):
     # Initialize GStreamer
@@ -36,6 +36,10 @@ def start_sender(host, port):
         elif msg_type == Gst.MessageType.EOS:
             print("End-Of-Stream reached")
             loop.quit()
+        elif msg_type == Gst.MessageType.STATE_CHANGED:
+            old_state, new_state, pending_state = message.parse_state_changed()
+            if message.src == pipeline:
+                print(f"Pipeline state changed from {old_state.value_name} to {new_state.value_name}")
 
     bus.connect("message", on_message)
 
@@ -48,10 +52,4 @@ def start_sender(host, port):
         pipeline.set_state(Gst.State.NULL)
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: python3 sender.py <host> <port>")
-        sys.exit(1)
-
-    host = sys.argv[1]
-    port = sys.argv[2]
-    start_sender(host, port)
+    start_sender(HOST, PORT)
