@@ -12,8 +12,7 @@ def start_sender(host, port):
 
     # Build the sender pipeline
     pipeline_description = (
-        f"videotestsrc ! x264enc tune=zerolatency bitrate=500 speed-preset=superfast "
-        f"! rtph264pay config-interval=1 pt=96 ! tcpclientsink host={host} port={port}"
+        f"videotestsrc ! videoconvert ! x264enc ! mpegtsmux ! tcpclientsink host={host} port={port}"
     )
 
 #    pipeline_description = (
