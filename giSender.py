@@ -11,14 +11,14 @@ def start_sender(host, port):
     Gst.init(None)
 
     # Build the sender pipeline
-#    pipeline_description = (
-#        f"videotestsrc ! x264enc tune=zerolatency bitrate=500 speed-preset=superfast "
-#        f"! rtph264pay config-interval=1 pt=96 ! tcpclientsink host={host} port={port}"
-#    )
-
     pipeline_description = (
-        f"libcamera-vid -fps 26 -h 450 -w 600 -vf -n -t 0 -b 200000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96! gdppay ! tcpclientsink host={host} port={port}"
+        f"videotestsrc ! x264enc tune=zerolatency bitrate=500 speed-preset=superfast "
+        f"! rtph264pay config-interval=1 pt=96 ! tcpclientsink host={host} port={port}"
     )
+
+#    pipeline_description = (
+#        f"libcamera-vid -fps 26 -h 450 -w 600 -vf -n -t 0 -b 200000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96! gdppay ! tcpclientsink host={host} port={port}"
+#    )
 
 
     pipeline = Gst.parse_launch(pipeline_description)
