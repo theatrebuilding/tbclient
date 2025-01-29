@@ -44,7 +44,7 @@ def build_pipeline(cfg):
       alignment: 7
 
     srt:
-      uri: "srt://127.0.0.1:7001?mode=caller&latency=5000&rbuf=32768&wbuf=32768&tsbpdDelay=2000"
+      uri: "srt://178.249.52.14:7701?mode=caller&latency=5000&rbuf=32768&wbuf=32768&tsbpdDelay=2000"
     """
     video_cfg = cfg["video"]
     srt_cfg   = cfg["srt"]
@@ -69,7 +69,7 @@ def build_pipeline(cfg):
     live_str = str(is_live).lower()  # "true" or "false"
 
     # SRT sink URI
-    srt_uri = srt_cfg.get("uri", "srt://127.0.0.1:7001?mode=caller")
+    srt_uri = srt_cfg.get("uri", "srt://178.249.52.14:7701?mode=caller&latency=5000&rbuf=32768&wbuf=32768&tsbpdDelay=2000")
 
     # Construct pipeline string
     # Matches your example:
