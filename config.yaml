@@ -1,0 +1,21 @@
+node: "A"
+
+video:
+  src: "videotestsrc"
+  is_live: true
+  format: "I420"
+  # x264enc settings
+  tune: "zerolatency"
+  bitrate: 1000
+  key_int_max: 15
+  bframes: 0
+  aud: true
+  option_string: "repeat-headers=1"
+  byte_stream: true
+  # h264parse
+  config_interval: 1
+  # mpegtsmux
+  alignment: 7
+
+srt:
+  uri: "srt://89.150.157.103:7001?mode=caller&latency=5000&rbuf=32768&wbuf=32768&tsbpdDelay=2000"
