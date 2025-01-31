@@ -15,8 +15,11 @@ audio:
   src: "alsasrc"  # Change to "pulsesrc" if using PulseAudio
   rate: 44100
   channels: 2
-  bitrate: 128  # in kbps
+  bitrate: 512  # in kbps
 
 srt:
-  video_uri: "srt://178.249.52.14:7701?mode=caller&latency=100&rbuf=32768&wbuf=32768&tsbpdDelay=2000"
-  audio_uri: "srt://178.249.52.14:7702?mode=caller&latency=100&rbuf=32768&wbuf=32768&tsbpdDelay=2000"
+  host: "178.249.52.14"
+  latency: 100
+  rbuf: 32768
+  wbuf: 32768
+  tsbpdDelay: 2000
