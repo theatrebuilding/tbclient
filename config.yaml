@@ -6,7 +6,7 @@ video:
   format: "I420"
   # x264enc settings
   tune: "zerolatency"
-  bitrate: 1000
+  bitrate: 10000
   key_int_max: 15
   bframes: 0
   aud: true
