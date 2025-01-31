@@ -75,7 +75,7 @@ def build_pipeline(cfg):
     # Matches your example:
     # gst-launch-1.0 -v videotestsrc is-live=true ! video/x-raw,format=I420 ! videoconvert ! ...
     pipeline_str = f"""
-    {video_src} is-live={live_str} !
+    {video_src} !
       video/x-raw,format={color_format} !
       videoconvert !
       x264enc tune={tune} bitrate={bitrate} key-int-max={key_int_max} bframes={bframes} aud={aud_str} byte-stream={byte_stream_str} option-string="{option_str}" !
