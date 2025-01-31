@@ -18,4 +18,4 @@ video:
   alignment: 7
 
 srt:
-  uri: "srt://178.249.52.14:7701?mode=caller&latency=5000&rbuf=32768&wbuf=32768&tsbpdDelay=2000"
+  uri: "srt://178.249.52.14:7701?mode=caller&latency=500&rbuf=32768&wbuf=32768&tsbpdDelay=2000"
