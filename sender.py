@@ -21,9 +21,10 @@ def load_config():
 def build_pipeline(cfg):
     video_cfg = cfg["video"]
     srt_cfg = cfg["srt"]
+    audio_cfg = cfg["audio"]
     
-    video_src = "v4l2src"  # Use webcam instead of videotestsrc
-    color_format = video_cfg.get("format", "I420")
+    video_src = video_cfg.get("video_src", "v4l2src")  # Use webcam instead of videotestsrc
+    color_format = video_cfg.get("color_format", "I420")
     tune = video_cfg.get("tune", "zerolatency")
     bitrate = video_cfg.get("bitrate", 1000)
     key_int_max = video_cfg.get("key_int_max", 15)
@@ -36,7 +37,13 @@ def build_pipeline(cfg):
     
     aud_str = "true" if aud_bool else "false"
     byte_stream_str = "true" if byte_stream else "false"
-    srt_uri = srt_cfg.get("uri", "srt://178.249.52.14:7701?mode=caller&latency=5000&rbuf=32768&wbuf=32768&tsbpdDelay=2000")
+    srt_video_uri = srt_cfg.get("video_uri", "srt://178.249.52.14:7701?mode=caller&latency=5000&rbuf=32768&wbuf=32768&tsbpdDelay=2000")
+    srt_audio_uri = srt_cfg.get("audio_uri", "srt://178.249.52.14:7702?mode=caller&latency=5000&rbuf=32768&wbuf=32768&tsbpdDelay=2000")
+    
+    audio_src = audio_cfg.get("src", "alsasrc")
+    audio_rate = audio_cfg.get("rate", 44100)
+    audio_channels = audio_cfg.get("channels", 2)
+    audio_bitrate = audio_cfg.get("bitrate", 128)
     
     pipeline_str = f"""
     {video_src} !
@@ -45,8 +52,18 @@ def build_pipeline(cfg):
       video/x-h264,stream-format=byte-stream,alignment=au,profile=baseline !
       h264parse config-interval={config_interval} !
       queue !
+      mpegtsmux name=mux alignment={alignment} !
+      srtsink uri="{srt_video_uri}"
+    
+    {audio_src} !
+      audioconvert !
+      audioresample !
+      audio/x-raw,rate={audio_rate},channels={audio_channels} !
+      voaacenc bitrate={audio_bitrate * 1000} !
+      aacparse !
+      queue !
       mpegtsmux alignment={alignment} !
-      srtsink uri="{srt_uri}"
+      srtsink uri="{srt_audio_uri}"
     """
     
     return pipeline_str

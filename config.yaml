@@ -1,21 +1,22 @@
-node: "A"
-
 video:
-  src: "videotestsrc"
-  is_live: true
-  format: "I420"
-  # x264enc settings
+  video_src: "v4l2src"
+  color_format: "I420"
   tune: "zerolatency"
-  bitrate: 10000
+  bitrate: 1000
   key_int_max: 15
   bframes: 0
   aud: true
   option_string: "repeat-headers=1"
   byte_stream: true
-  # h264parse
   config_interval: 1
-  # mpegtsmux
   alignment: 7
 
+audio:
+  src: "alsasrc"  # Change to "pulsesrc" if using PulseAudio
+  rate: 44100
+  channels: 2
+  bitrate: 128  # in kbps
+
 srt:
-  uri: "srt://178.249.52.14:7701?mode=caller&latency=500&rbuf=32768&wbuf=32768&tsbpdDelay=2000"
+  video_uri: "srt://178.249.52.14:7701?mode=caller&latency=100&rbuf=32768&wbuf=32768&tsbpdDelay=2000"
+  audio_uri: "srt://178.249.52.14:7702?mode=caller&latency=100&rbuf=32768&wbuf=32768&tsbpdDelay=2000"
