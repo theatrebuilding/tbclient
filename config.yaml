@@ -1,7 +1,7 @@
 node: "A"
 
 video:
-  src: "videotestsrc"
+  src: "v4l2src"
   is_live: true
   format: "I420"
   # x264enc settings
