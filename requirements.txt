@@ -1,0 +1,7 @@
+gstreamer-player==1.1.2
+opencv-python==4.10.0.84
+pycairo==1.27.0
+pygi==1.0.3
+PyGObject==3.50.0
+pygobject-pycairo-prebuilt-libraries-vs2019==0.1.1a6
+python-Levenshtein==0.26.1
