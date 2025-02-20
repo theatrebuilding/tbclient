@@ -5,3 +5,4 @@ pygi==1.0.3
 PyGObject==3.50.0
 pygobject-pycairo-prebuilt-libraries-vs2019==0.1.1a6
 python-Levenshtein==0.26.1
+PyYAML==6.0
